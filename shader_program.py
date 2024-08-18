@@ -6,9 +6,7 @@ class ShaderProgram:
         self.app = app
         self.ctx = app.ctx
         self.player = app.player
-        # -------- shaders -------- #
         self.quad = self.get_program(shader_name='quad')
-        # ------------------------- #
         self.set_uniforms_on_init()
 
     def set_uniforms_on_init(self):
@@ -27,46 +25,3 @@ class ShaderProgram:
 
         program = self.ctx.program(vertex_shader=vertex_shader, fragment_shader=fragment_shader)
         return program
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
