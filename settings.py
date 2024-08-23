@@ -23,3 +23,6 @@ MOUSE_SENSITIVITY = 0.002
 
 # colors
 BG_COLOR = glm.vec3(0, 0, 0)
+
+CHUNK_WIDTH = 16
+CHUNK_HEIGHT = 128
