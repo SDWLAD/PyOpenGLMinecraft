@@ -3,8 +3,9 @@
 layout (location = 0) out vec4 fragColor;
 
 uniform sampler2D u_texture_0;
+in vec2 uv;
 
 void main() {
-    vec3 tex_col = vec3(1.);
+    vec3 tex_col = texture(u_texture_0, uv).rgb;
     fragColor = vec4(tex_col, 1);
 }

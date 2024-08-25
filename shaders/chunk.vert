@@ -7,7 +7,13 @@ uniform mat4 m_proj;
 uniform mat4 m_view;
 uniform mat4 m_model;
 
+out vec2 uv;
+
+const vec2 uv_coords[4] = vec2[4](vec2(0, 0), vec2(0, 1),  vec2(1, 0), vec2(1, 1));
+const int uv_indices[12] = int[12](1, 0, 2, 1, 2, 3, 3, 0, 2, 3, 1, 0);
+const float face_shading[6] = float[6](1.0, 0.5, 0.5, 0.8, 0.5, 0.8);
 
 void main() {
+    uv = uv_coords[uv_indices[gl_VertexID % 6  + (face_id & 1) * 6]];
     gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0);
 }
