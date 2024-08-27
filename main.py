@@ -4,7 +4,7 @@ import pygame as pg
 import sys
 from shader_program import ShaderProgram
 from scene import Scene
-from player import Player
+from player import Player 
 from textures import Textures
 
 
@@ -25,6 +25,7 @@ class VoxelEngine:
         self.clock = pg.time.Clock()
         self.delta_time = 0
         self.time = 0
+        self.ticks = 0
 
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
@@ -62,6 +63,7 @@ class VoxelEngine:
             self.handle_events()
             self.update()
             self.render()
+            self.ticks+=1
         pg.quit()
         sys.exit()
 
