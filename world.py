@@ -2,34 +2,51 @@ from settings import *
 from world_objects.chunk import Chunk
 
 class World:
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, game_cls):
+        self.game_cls = game_cls
         self.chunks = {}
+        self.chunks_stack = []
 
-    def create_chunk(self, chunk):
-        """Generates and prepares a chunk for rendering."""
+    def create_chunk(self, chunk, x, z):
         chunk.generate_chunk()
+        chunk.side_chunks = [
+            self.chunks.get((x + dx, z + dz), Chunk(self.game_cls)) for dx, dz in [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        ]
         chunk.mesh.vao = chunk.mesh.get_vao()
 
+    def update_stack(self):
+        if not self.chunks_stack: return
+        chunk = self.chunks_stack[0]
+        self.create_chunk(chunk, *chunk.position)
+        [self.create_chunk(chunk.side_chunks[i], *chunk.side_chunks[i].position) for i in range(4) if
+            chunk.side_chunks[i].position != (float("inf"), float("inf"))]
+        self.chunks_stack.remove(chunk)
+            
+
     def build_chunks(self, tick):
-        if tick % 10 == 0:
-            player_x, player_z = map(lambda x: int(x // CHUNK_WIDTH), (self.app.player.position.x, self.app.player.position.z))
-            for i in range(player_x-RENDER_DISTANCE, player_x+RENDER_DISTANCE + 1):
-                for j in range(player_z-RENDER_DISTANCE, player_z+RENDER_DISTANCE + 1):
-                    if (i, j) not in self.chunks:
-                        self.chunks[(i, j)] = Chunk(self.app, (i, j))
-                        self.create_chunk(self.chunks[(i, j)])
+        i, j = map(lambda x: int(x//CHUNK_WIDTH), (self.game_cls.player.position.x, self.game_cls.player.position.z))
+        for x in range(i - RENDER_DISTANCE, RENDER_DISTANCE + i + 1):
+            for z in range(j - RENDER_DISTANCE, RENDER_DISTANCE + j + 1):
+                if (x, z) not in self.chunks:
+                    chunk = Chunk(self.game_cls, (x, z))
+                    self.chunks[chunk.position] = chunk
+                    if tick == 0:
+                        self.create_chunk(chunk, *chunk.position)
+                        [self.create_chunk(chunk.side_chunks[i], *chunk.side_chunks[i].position) for i in range(4) if
+                            chunk.side_chunks[i].position != (float("inf"), float("inf"))]
+                        continue
+                    self.chunks_stack.append(chunk)
 
     def update(self, tick):
         self.build_chunks(tick)
+        self.update_stack()
 
     def render(self):
-        """Renders only the chunks within the render distance of the player."""
-        player_x, player_z = map(lambda x: int(x // CHUNK_WIDTH), (self.app.player.position.x, self.app.player.position.z))
-        render_range_x = range(player_x - RENDER_DISTANCE, player_x + RENDER_DISTANCE + 1)
-        render_range_z = range(player_z - RENDER_DISTANCE, player_z + RENDER_DISTANCE + 1)
+        player_pos = self.game_cls.player.position
+        player_chunk_pos = (int(player_pos.x // CHUNK_WIDTH), int(player_pos.z // CHUNK_WIDTH))
+        render_range = range(-RENDER_DISTANCE, RENDER_DISTANCE + 1)
 
-        for i in render_range_x:
-            for j in render_range_z:
-                if (i, j) in self.chunks:
-                    self.chunks[(i, j)].render()
+        for chunk_pos, chunk in self.chunks.items():
+            if (chunk_pos[0] - player_chunk_pos[0] in render_range) and (chunk_pos[1] - player_chunk_pos[1] in render_range):
+                try: chunk.render()
+                except:...  

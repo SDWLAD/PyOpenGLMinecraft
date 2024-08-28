@@ -7,11 +7,12 @@ class Chunk:
         self.blocks = np.zeros(CHUNK_WIDTH * CHUNK_HEIGHT * CHUNK_WIDTH, dtype='uint8')
         self.mesh = Mesh(game, self)
         self.m_model = self.get_model_matrix()
+        self.side_chunks=[None, None, None, None]
         
     def generate_chunk(self):
         for x in range(CHUNK_WIDTH):
             for z in range(CHUNK_WIDTH):
-                world_height = int(glm.simplex(glm.vec2(x+self.position[0]*CHUNK_WIDTH, z+self.position[1]*CHUNK_WIDTH) * 0.01) * 16+32)
+                world_height = int(glm.simplex(glm.vec2(x+self.position[0]*CHUNK_WIDTH, z+self.position[1]*CHUNK_WIDTH) * 0.01) * 32 + 32)
                 for y in range(world_height):
                     self.blocks[x + CHUNK_WIDTH * z + CHUNK_WIDTH*CHUNK_WIDTH * y] = 1
 

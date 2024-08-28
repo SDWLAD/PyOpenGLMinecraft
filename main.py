@@ -11,8 +11,8 @@ from textures import Textures
 class VoxelEngine:
     def __init__(self):
         pg.init()
-        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, 24)
 
@@ -64,6 +64,7 @@ class VoxelEngine:
             self.update()
             self.render()
             self.ticks+=1
+            self.clock.tick(60)
         pg.quit()
         sys.exit()
 
