@@ -20,11 +20,13 @@ class Mesh():
         self.triangles = []
         self.vao:mgl.VertexArray
 
+    def rebuild(self):
+        self.vao = self.get_vao()
+
     def get_vertex_data(self):
         mesh = build_chunk_mesh(
             chunk_blocks=self.chunk.blocks,
             format_size=sum(int(fmt[:1]) for fmt in self.vbo_format.split()),
-            chunk_position=(self.chunk.position[0], 0, self.chunk.position[1]),
             chunks=[self.chunk.side_chunks[0].blocks, self.chunk.side_chunks[1].blocks, self.chunk.side_chunks[2].blocks, self.chunk.side_chunks[3].blocks],
         )
         return mesh
