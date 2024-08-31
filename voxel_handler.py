@@ -22,6 +22,9 @@ class VoxelHandler:
             self.chunk.blocks[self.voxel_index] = 0
 
             self.chunk.mesh.rebuild()
+            for i in range(4):
+                if self.chunk.side_chunks[i]:
+                    self.chunk.side_chunks[i].mesh.rebuild()
             
 
     def update(self):
