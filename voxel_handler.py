@@ -93,13 +93,6 @@ class VoxelHandler:
         )
         chunk = self.chunks[(cx, cz)]
         lx, ly, lz = voxel_local_pos = voxel_world_pos - chunk_pos * (CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_WIDTH)
-        if voxel_world_pos[0] < 0: 
-            if voxel_world_pos[0] % CHUNK_WIDTH != 0:
-                cx -= 1
-                lx += CHUNK_WIDTH
-            else:
-                lx -= 1
-        if voxel_world_pos[2] < 0: lz -= 1
 
         voxel_index = lx + CHUNK_WIDTH * lz + CHUNK_WIDTH*CHUNK_WIDTH * ly
         voxel_id = chunk.blocks[voxel_index]
