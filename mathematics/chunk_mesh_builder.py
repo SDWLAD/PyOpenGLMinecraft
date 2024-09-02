@@ -1,43 +1,24 @@
 from settings import *
-from numba import njit, uint8
+from numba import njit, uint8, prange
 import numpy as np
 
 @njit
 def get_ao(local_pos, chunk_blocks, chunks, plane):
     x, y, z = local_pos
-
+    
     if plane == 'Y':
-        a = is_void((x    , y, z - 1), chunk_blocks, chunks)
-        b = is_void((x - 1, y, z - 1), chunk_blocks, chunks)
-        c = is_void((x - 1, y, z    ), chunk_blocks, chunks)
-        d = is_void((x - 1, y, z + 1), chunk_blocks, chunks)
-        e = is_void((x    , y, z + 1), chunk_blocks, chunks)
-        f = is_void((x + 1, y, z + 1), chunk_blocks, chunks)
-        g = is_void((x + 1, y, z    ), chunk_blocks, chunks)
-        h = is_void((x + 1, y, z - 1), chunk_blocks, chunks)
-
+        offsets = [(0, 0, -1), (-1, 0, -1), (-1, 0, 0), (-1, 0, 1), 
+                   (0, 0, 1), (1, 0, 1), (1, 0, 0), (1, 0, -1)]
     elif plane == 'X':
-        a = is_void((x, y    , z - 1), chunk_blocks, chunks)
-        b = is_void((x, y - 1, z - 1), chunk_blocks, chunks)
-        c = is_void((x, y - 1, z    ), chunk_blocks, chunks)
-        d = is_void((x, y - 1, z + 1), chunk_blocks, chunks)
-        e = is_void((x, y    , z + 1), chunk_blocks, chunks)
-        f = is_void((x, y + 1, z + 1), chunk_blocks, chunks)
-        g = is_void((x, y + 1, z    ), chunk_blocks, chunks)
-        h = is_void((x, y + 1, z - 1), chunk_blocks, chunks)
+        offsets = [(0, 0, -1), (0, -1, -1), (0, -1, 0), (0, -1, 1), 
+                   (0, 0, 1), (0, 1, 1), (0, 1, 0), (0, 1, -1)]
+    else:
+        offsets = [(-1, 0, 0), (-1, -1, 0), (0, -1, 0), (1, -1, 0), 
+                   (1, 0, 0), (1, 1, 0), (0, 1, 0), (-1, 1, 0)]
+    voids = [is_void((x + dx, y + dy, z + dz), chunk_blocks, chunks) for dx, dy, dz in offsets]
+    
+    return (voids[0] + voids[1] + voids[2]), (voids[6] + voids[7] + voids[0]), (voids[4] + voids[5] + voids[6]), (voids[2] + voids[3] + voids[4])
 
-    else:  # Z plane
-        a = is_void((x - 1, y    , z), chunk_blocks, chunks)
-        b = is_void((x - 1, y - 1, z), chunk_blocks, chunks)
-        c = is_void((x    , y - 1, z), chunk_blocks, chunks)
-        d = is_void((x + 1, y - 1, z), chunk_blocks, chunks)
-        e = is_void((x + 1, y    , z), chunk_blocks, chunks)
-        f = is_void((x + 1, y + 1, z), chunk_blocks, chunks)
-        g = is_void((x    , y + 1, z), chunk_blocks, chunks)
-        h = is_void((x - 1, y + 1, z), chunk_blocks, chunks)
-
-    ao = (a + b + c), (g + h + a), (e + f + g), (c + d + e)
-    return ao
 
 @njit(fastmath=True)
 def to_uint8(x, y, z, voxel_id, face_id, ao_id):
