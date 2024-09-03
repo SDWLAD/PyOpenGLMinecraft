@@ -2,7 +2,7 @@ from settings import *
 from numba import njit, uint8, prange
 import numpy as np
 
-@njit
+@njit(fastmath=True)
 def get_ao(local_pos, chunk_blocks, chunks, plane):
     x, y, z = local_pos
     

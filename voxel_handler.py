@@ -34,21 +34,21 @@ class VoxelHandler:
         x1, y1, z1 = self.app.player.position
         x2, y2, z2 = self.app.player.position + self.app.player.forward * MAX_RAY_DIST
 
-        current_voxel_pos = glm.ivec3(x1, y1, z1)
+        current_voxel_pos = glm.ivec3(glm.floor(x1), glm.floor(y1), glm.floor(z1))
         self.voxel_id = 0
         self.voxel_normal = glm.ivec3(0)
         step_dir = -1
 
         dx = glm.sign(x2 - x1)
-        delta_x = min(dx / (x2 - x1), 10000000.0) if dx != 0 else 10000000.0
+        delta_x = abs(1.0 / (x2 - x1)) if dx != 0 else 10000000.0
         max_x = delta_x * (1.0 - glm.fract(x1)) if dx > 0 else delta_x * glm.fract(x1)
 
         dy = glm.sign(y2 - y1)
-        delta_y = min(dy / (y2 - y1), 10000000.0) if dy != 0 else 10000000.0
+        delta_y = abs(1.0 / (y2 - y1)) if dy != 0 else 10000000.0
         max_y = delta_y * (1.0 - glm.fract(y1)) if dy > 0 else delta_y * glm.fract(y1)
 
         dz = glm.sign(z2 - z1)
-        delta_z = min(dz / (z2 - z1), 10000000.0) if dz != 0 else 10000000.0
+        delta_z = abs(1.0 / (z2 - z1)) if dz != 0 else 10000000.0
         max_z = delta_z * (1.0 - glm.fract(z1)) if dz > 0 else delta_z * glm.fract(z1)
 
         while not (max_x > 1.0 and max_y > 1.0 and max_z > 1.0):
