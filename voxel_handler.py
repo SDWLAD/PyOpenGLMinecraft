@@ -15,7 +15,13 @@ class VoxelHandler:
         self.voxel_normal = None
     
     def add_voxel(self):
-        pass
+        if self.voxel_id:
+            result = self.get_voxel_id(self.voxel_world_pos + self.voxel_normal)
+            if not result[0]:
+                _, voxel_index, _, chunk = result
+                chunk.blocks[voxel_index] = 1
+                chunk.mesh.rebuild()
+
 
     def remove_voxel(self):
         if self.voxel_id:
