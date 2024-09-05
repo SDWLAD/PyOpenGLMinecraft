@@ -7,13 +7,20 @@ class ShaderProgram:
         self.ctx = app.ctx
         self.player = app.player
         self.chunk = self.get_program(shader_name='chunk')
+        self.voxel_marker = self.get_program(shader_name='voxel_marker')
         self.set_uniforms_on_init()
 
     def set_uniforms_on_init(self):
         self.chunk['m_proj'].write(self.player.m_proj)
         self.chunk['m_model'].write(glm.mat4())
 
+        # marker
+        self.voxel_marker['m_proj'].write(self.player.m_proj)
+        self.voxel_marker['m_model'].write(glm.mat4())
+        self.voxel_marker['u_texture_0'] = 0
+
     def update(self):
+        self.voxel_marker['m_view'].write(self.player.m_view)
         self.chunk['m_view'].write(self.player.m_view)
 
     def get_program(self, shader_name):
