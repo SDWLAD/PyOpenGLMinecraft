@@ -1,8 +1,7 @@
 #version 330 core
 
-layout (location = 0) in ivec3 in_position;
-layout (location = 1) in int face_id;
-layout (location = 2) in int ao_id;
+in ivec3 in_position;
+in int ao_id;
 
 uniform mat4 m_proj;
 uniform mat4 m_view;
@@ -10,6 +9,7 @@ uniform mat4 m_model;
 
 out vec2 uv;
 out float shading_color;
+flat out int face_id;
 
 const float ao_values[4] = float[4](0.3, 0.5, 0.75, 1.0);
 
