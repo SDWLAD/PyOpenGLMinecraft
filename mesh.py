@@ -15,7 +15,7 @@ class Mesh():
         self.program = app.shader_program.chunk
 
         self.vbo_format = '3u1 1u1 1u1 1u1'
-        self.attrs = ('in_position', 'block', 'face_id', 'ao_id')
+        self.attrs = ('in_position', 'block_id', 'face_id', 'ao_id')
         self.vertices = []
         self.triangles = []
         self.vao:mgl.VertexArray

@@ -17,7 +17,6 @@ class ShaderProgram:
         # marker
         self.voxel_marker['m_proj'].write(self.player.m_proj)
         self.voxel_marker['m_model'].write(glm.mat4())
-        # self.voxel_marker['texture_array_0'] = 0
 
     def update(self):
         self.voxel_marker['m_view'].write(self.player.m_view)

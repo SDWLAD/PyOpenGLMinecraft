@@ -8,7 +8,6 @@ class Textures:
         self.ctx = app.ctx
 
         # load texture
-        # self.texture_0 = self.load('grass.png')
         self.texture_array_0 = self.load('tex_array_0.png', is_tex_array=True)
 
         # assign texture unit

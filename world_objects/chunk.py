@@ -14,7 +14,7 @@ class Chunk:
             for z in range(CHUNK_WIDTH):
                 world_height = int(glm.simplex(glm.vec2(x+self.position[0]*CHUNK_WIDTH, z+self.position[1]*CHUNK_WIDTH) * 0.01) * 32 + 32)
                 for y in range(world_height):
-                    self.blocks[x + CHUNK_WIDTH * z + CHUNK_WIDTH*CHUNK_WIDTH * y] = 1
+                    self.blocks[x + CHUNK_WIDTH * z + CHUNK_WIDTH*CHUNK_WIDTH * y] = 2
 
     def get_model_matrix(self):
         m_model = glm.translate(glm.mat4(), glm.vec3(self.position[0], 0, self.position[1]) * CHUNK_WIDTH)
