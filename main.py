@@ -44,9 +44,9 @@ class VoxelEngine:
         self.shader_program.update()
         self.scene.update()
 
-        self.delta_time = self.clock.tick()
+        self.delta_time = self.clock.tick(60)
         self.time = pg.time.get_ticks() * 0.001
-        pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
+        pg.display.set_caption(f'{self.clock.get_fps() :.0f}, {self.scene.world.voxel_handler.selected_block_id}')
 
     def render(self):
         self.ctx.clear(color=BG_COLOR)
@@ -65,7 +65,6 @@ class VoxelEngine:
             self.update()
             self.render()
             self.ticks+=1
-            self.clock.tick(60)
         pg.quit()
         sys.exit()
 

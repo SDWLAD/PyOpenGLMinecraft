@@ -21,6 +21,12 @@ class Player(Camera):
                 voxel_handler.remove_voxel()
             if event.button == 3:
                 voxel_handler.add_voxel()
+        if event.type == pg.MOUSEWHEEL:
+            if event.y < 0:
+                self.app.scene.world.voxel_handler.selected_block_id -= 1
+            if event.y > 0:
+                self.app.scene.world.voxel_handler.selected_block_id += 1
+            self.app.scene.world.voxel_handler.selected_block_id = max(1, self.app.scene.world.voxel_handler.selected_block_id % 8)
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()

@@ -13,13 +13,15 @@ class VoxelHandler:
         self.voxel_local_pos = None
         self.voxel_world_pos = None
         self.voxel_normal = None
+
+        self.selected_block_id = 1
     
     def add_voxel(self):
         if self.voxel_id:
             result = self.get_voxel_id(self.voxel_world_pos + self.voxel_normal)
             if not result[0]:
                 _, voxel_index, _, chunk = result
-                chunk.blocks[voxel_index] = 1
+                chunk.blocks[voxel_index] = self.selected_block_id
                 chunk.mesh.rebuild()
 
 
