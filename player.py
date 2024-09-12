@@ -26,7 +26,6 @@ class Player(Camera):
                 self.app.scene.world.voxel_handler.selected_block_id -= 1
             if event.y > 0:
                 self.app.scene.world.voxel_handler.selected_block_id += 1
-            self.app.scene.world.voxel_handler.selected_block_id = max(1, self.app.scene.world.voxel_handler.selected_block_id % 8)
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()
