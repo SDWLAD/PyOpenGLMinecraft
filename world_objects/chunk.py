@@ -14,11 +14,11 @@ class Chunk:
             for z in range(CHUNK_WIDTH):
                 world_height = int(glm.simplex(glm.vec2(x+self.position[0]*CHUNK_WIDTH, z+self.position[1]*CHUNK_WIDTH) * 0.01) * 32 + 32)
                 for y in range(world_height):
-                    if y == world_height-1: block = 4
-                    elif y >= world_height-4: block = 3
-                    else: block = 2
+                    if y == world_height-1: block = 3
+                    elif y >= world_height-4: block = 2
+                    else: block = 1
 
-                    if y >= world_height-5 and world_height > 40: block = 6
+                    if y >= world_height-5 and world_height > 40: block = 5
 
                     if world_height < 6: block = 1
 

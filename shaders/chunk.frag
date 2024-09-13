@@ -17,7 +17,7 @@ void main() {
     face_uv.x = uv.x / 16.0 + (1.0-(f_block_id+1)/16.0);
     face_uv.y = uv.y / 16.0;
 
-    if (f_block_id == 4 && f_face_id==0){
+    if (f_block_id == 3 && f_face_id==0){
         face_uv.x = uv.x / 16.0 + (1.0-1.0/16.0);
         biome_col *= vec3(0.0, 0.8, 0.2);
     }
