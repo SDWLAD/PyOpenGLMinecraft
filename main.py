@@ -24,7 +24,7 @@ class VoxelEngine:
 
         self.clock = pg.time.Clock()
         self.delta_time = 0
-        self.time = 0
+        self.time = 0   
         self.ticks = 0
 
         pg.event.set_grab(True)
