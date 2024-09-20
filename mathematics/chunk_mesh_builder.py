@@ -44,6 +44,8 @@ def add_data(vertex_data, index, *vertices):
         index += len(vertex)
     return index
 
+a = [1, 2, 3]
+
 @njit(fastmath=True)
 def build_chunk_mesh(chunk_blocks, format_size, chunks):
     vertex_data = np.empty((CHUNK_WIDTH*CHUNK_WIDTH*CHUNK_HEIGHT * 18 * format_size,), dtype=np.uint8)
