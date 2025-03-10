@@ -1,0 +1,8 @@
+PyOpenGL>=3.1.5
+PyOpenGL_accelerate>=3.1.5
+moderngl>=5.6.2
+numpy>=1.20.0
+PySDL2>=0.9.9
+PyShaderDebug>=0.1.1
+pysimplegui>=0.0.3
+pyyaml>=5.4.1
