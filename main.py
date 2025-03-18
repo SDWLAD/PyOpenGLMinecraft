@@ -27,7 +27,6 @@ class VoxelEngine:
         self.time = 0   
         self.ticks = 0
 
-        pg.event.set_grab(True)
         pg.mouse.set_visible(False)
 
         self.is_running = True

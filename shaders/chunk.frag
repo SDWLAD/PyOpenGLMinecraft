@@ -24,6 +24,6 @@ void main() {
 
     vec3 tex_col = texture(texture_array_0, face_uv).rgb*shading_color*biome_col;
     float fog_dist = gl_FragCoord.z / gl_FragCoord.w;
-    tex_col = mix(tex_col, vec3(0.16, 0.27, 1), (1.0 - exp2(-0.0005 * fog_dist * fog_dist)));
+    // tex_col = mix(tex_col, vec3(0.16, 0.27, 1), (1.0 - exp2(-0.0005 * fog_dist * fog_dist)));
     fragColor = vec4(tex_col, 1);
 }

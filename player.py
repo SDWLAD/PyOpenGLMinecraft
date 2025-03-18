@@ -14,7 +14,6 @@ class Player(Camera):
         super().update()
 
     def handle_event(self, event):
-        # adding and removing voxels with clicks
         if event.type == pg.MOUSEBUTTONDOWN:
             voxel_handler = self.app.scene.world.voxel_handler
             if event.button == 1:
@@ -31,6 +30,7 @@ class Player(Camera):
         mouse_dx, mouse_dy = pg.mouse.get_rel()
         if mouse_dx: self.rotation.x+=mouse_dx * MOUSE_SENSITIVITY
         if mouse_dy: self.rotation.y-=mouse_dy * MOUSE_SENSITIVITY
+        pg.mouse.set_pos((WIN_RES[0]//2, WIN_RES[1]//2))
 
     def keyboard_control(self):
         key_state = pg.key.get_pressed()
